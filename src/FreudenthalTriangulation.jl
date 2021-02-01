@@ -1,6 +1,7 @@
 module FreudenthalTriangulation
 
 using LinearAlgebra
+using SparseArrays
 
 export freudenthal_vertices, freudenthal_simplex, barycentric_coordinates, freudenthal_simplex_and_coords!,
         to_belief, to_freudenthal, to_freudenthal_batch
@@ -69,12 +70,10 @@ function barycentric_coordinates(x, V)
 end
 
 """
-    freudenthal_simplex_and_coords!(x::AbstractArray, V::Vector{Vector{Int64}}, λ::Vector{Float64})
+    freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
 Fills `V` and `λ` with the simplex points in the Freudenthal space and associated coordinates respectively.
 """
-function freudenthal_simplex_and_coords!(x::AbstractArray, V::Vector{Vector{Int64}}, λ::Vector{Float64})
-    # V = freudenthal_simplex(x)
-    # λ = barycentric_coords(x, V)
+function freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
     n = length(x)
     V[1] = floor.(Int, x)
     d = x - V[1]

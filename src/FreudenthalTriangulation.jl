@@ -1,5 +1,7 @@
 module FreudenthalTriangulation
 
+using LinearAlgebra
+
 export freudenthal_vertices, freudenthal_simplex, barycentric_coordinates, freudenthal_simplex_and_coords!,
         to_belief, to_freudenthal, to_freudenthal_batch
 
@@ -32,10 +34,10 @@ function freudenthal_vertices!(V::Vector{Vector{Int64}}, v::Vector{Int64}, i::In
 end
 
 """
-    freudenthal_simplex(x::Vector{Int64})
+    freudenthal_simplex(x::Vector{Float64})
 Returns the list of vertices of the simplex of point `x` in the Freudenthal grid.
 """
-function freudenthal_simplex(x::Vector{Int64})
+function freudenthal_simplex(x::Vector{Float64})
     n = length(x)
     V = Vector{Vector{Int}}(undef, n+1)
     V[1] = floor.(Int, x)
@@ -67,12 +69,25 @@ function barycentric_coordinates(x, V)
 end
 
 """
-    freudenthal_simplex_and_coords!(x::AbstractArray{Int64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
+    freudenthal_simplex_and_coords!(x::AbstractArray, V::Vector{Vector{Int64}}, λ::Vector{Float64})
 Fills `V` and `λ` with the simplex points in the Freudenthal space and associated coordinates respectively.
 """
-function freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
-    V = freudenthal_simplex(x)
-    λ = barycentric_coords(x, V)
+function freudenthal_simplex_and_coords!(x::AbstractArray, V::Vector{Vector{Int64}}, λ::Vector{Float64})
+    # V = freudenthal_simplex(x)
+    # λ = barycentric_coords(x, V)
+    n = length(x)
+    V[1] = floor.(Int, x)
+    d = x - V[1]
+    p = sortperm(d, rev=true)
+    for i in 2 : n+1
+        copyto!(V[i], V[i-1])
+        V[i][p[i-1]] += 1
+    end
+    λ[n+1] = d[p[n]]
+    for i in n:-1:2
+        λ[i] = d[p[i-1]] - d[p[i]]
+    end
+    λ[1] = 1.0 - sum(λ[2:end])
     return V, λ
 end
 

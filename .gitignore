@@ -1,5 +1,2 @@
-*.jl.*.cov
-*.jl.cov
-*.jl.mem
-/Manifest.toml
-/.DS_Store
+Manifest.toml
+.DS_Store

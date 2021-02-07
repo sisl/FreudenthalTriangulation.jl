@@ -5,7 +5,7 @@ using SparseArrays
 
 export freudenthal_vertices, freudenthal_simplex, barycentric_coordinates, freudenthal_simplex_and_coords!,
         to_belief, to_freudenthal, to_freudenthal_batch
-
+    
 
 # Construct the Freudenthal triangulation of the belief simplex
 

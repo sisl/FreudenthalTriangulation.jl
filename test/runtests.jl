@@ -8,7 +8,7 @@ using Test
     @test size(V, 1) == binomial(n + m - 1, m)
     v = rand(V)
     @test size(v, 1) == n && v[1] == m
-    @test issorted(v, rev=true)
+    @test issorted(v, rev=true)    
 
     # test freudenthal_simplex
     n = rand(5:20)

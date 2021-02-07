@@ -70,6 +70,15 @@ function barycentric_coordinates(x, V)
 end
 
 """
+    freudenthal_coords(x::AbstractArray{Float64})
+Given a point `x`, returns the simplex of the point `x` and the barycentric coordinates of `x` in the grid.
+"""
+function freudenthal_simplex_and_coords(x::Vector{Float64})
+    V = freudenthal_simplex(x)
+    return V, barycentric_coordinates(x, V)
+end
+
+"""
     freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
 Fills `V` and `λ` with the simplex points in the Freudenthal space and associated coordinates respectively.
 """
@@ -88,44 +97,6 @@ function freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Ve
     end
     λ[1] = 1.0 - sum(λ[2:end])
     return V, λ
-end
-
-"""
-    to_belief(x, m)
-Transform a point `x` in the Freudenthal space to a point in the belief space.
-`m` is the resolution of the Freudenthal grid.
-"""
-to_belief(x, m) = (push!(x[1:end-1] - x[2:end], x[end]))./x[1]
-
-"""
-    to_freudenthal(b, m::Int64)
-Transform a point `b` in the belief space to a point in the Freudenthal space.
-`m` is the resolution of the Freudenthal grid.
-"""
-to_freudenthal(b, m::Int64) = [sum(b[k] for k in i : length(b))*m for i in 1 : length(b)]
-
-"""
-    freudenthal_matrix_inv(n::Int64, m::Int64)
-returns the inverse of the matrix used to switch from Freudenthal space to belief space.
-Let `IFM = freudenthal_matrix_inv(n, m)`, then `x = IFM * b`
-"""
-function freudenthal_matrix_inv(n::Int64, m::Int64)
-    return m .* sparse(UnitUpperTriangular(ones(n,n)))
-end
-
-"""
-    to_freudenthal_batch(B::AbstractArray, m::Int64)
-Given a batch of belief points `B`, returns the corresponding points in the Freudenthal space.
-"""
-function to_freudenthal_batch(B::AbstractArray, m::Int64)
-    ns = size(B, 1)
-    IFM = freudenthal_matrix_inv(ns, m)
-    BB = reshape(B, (ns, :))
-    X = similar(BB)
-    for i=1:size(BB, 2)
-        X[:, i] = IFM * view(BB, :, i)
-    end
-    return reshape(X, size(B))
 end
 
 end # module

@@ -4,9 +4,9 @@
 [![Coverage](https://codecov.io/gh/SidhartK/FreudenthalTriangulation.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/SidhartK/FreudenthalTriangulation.jl)
 [![Coverage](https://coveralls.io/repos/github/SidhartK/FreudenthalTriangulation.jl/badge.svg?branch=master)](https://coveralls.io/github/SidhartK/FreudenthalTriangulation.jl?branch=master)
 
-This package allows users to use Freudenthal triangulation for local value function approximation over a set of discrete belief points.
+This package allows users to use Freudenthal triangulation for functional value approximation.
 
-Specifically it allows the user to find the simplex of a point `x` in Freudenthal space and the barycentric coordinates of that point with respect to the its simplex. It also allows conversion between belief space and Freudenthal space.
+Specifically it allows the user to find the simplex of a point `x` in Freudenthal space and the barycentric coordinates of that point with respect to the its simplex. 
 
 ## Installation
 

@@ -3,10 +3,11 @@
 [![Build Status](https://travis-ci.com/SidhartK/FreudenthalTriangulation.jl.svg?branch=master)](https://travis-ci.com/SidhartK/FreudenthalTriangulation.jl)
 [![Coverage](https://codecov.io/gh/SidhartK/FreudenthalTriangulation.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/SidhartK/FreudenthalTriangulation.jl)
 [![Coverage](https://coveralls.io/repos/github/SidhartK/FreudenthalTriangulation.jl/badge.svg?branch=master)](https://coveralls.io/github/SidhartK/FreudenthalTriangulation.jl?branch=master)
+[![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://sidhartk.github.io/TestRepo2.jl/)
 
 This package allows users to use Freudenthal triangulation for functional value approximation.
 
-Specifically it allows the user to find the simplex of a point `x` in Freudenthal space and the barycentric coordinates of that point with respect to the its simplex. 
+Specifically it allows the user to find the simplex of a point `x` in Freudenthal space and the barycentric coordinates of that point with respect to the its simplex.
 
 ## Installation
 
@@ -46,28 +47,6 @@ For these functions the requirements are
 - `x::Vector{Float64}` The point in Freudenthal space
 - `V::Vector{Vector{Float64}}` The vertices of the simplex around `x` in Freudenthal space
 - `coords::Vector{Float64}` The barycentric coordinates of `x` with respect to the simplex
-
-## Moving between Belief and Freudenthal Space
-
-To go from a point `x` in Freudenthal space to a point in belief space use the function
-```julia
-b = to_belief(x, m)
-```
-where `m` is the granularity of the triangulation.
-
-To go from a point in belief space `b` to a point in Freudenthal space use the function
-```julia
-x = to_freudenthal(b, m)
-```
-where  `m` is again the granularity.
-
-To convert a batch of belief points `B` in a Freudenthal space with granularity `m`, use
-```julia
-X = to_freudenthal_batch(B, m)
-```
-For these functions the requirements are
-- `m::Int64` Granularity of the Freudenthal triangulation
-- `B::AbstractArray` The columns are the belief state points
 
 ## Credits
 

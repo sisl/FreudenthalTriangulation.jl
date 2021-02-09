@@ -1,14 +1,14 @@
 using FreudenthalTriangulation
 using Test
 
-@testset "FreudenthalTriangulations.jl" begin
+@testset "FreudenthalTriangulation.jl" begin
     # test freudenthal_vertices
     n, m = rand(1:10, 2)
     V = freudenthal_vertices(n, m)
     @test size(V, 1) == binomial(n + m - 1, m)
     v = rand(V)
     @test size(v, 1) == n && v[1] == m
-    @test issorted(v, rev=true)    
+    @test issorted(v, rev=true)
 
     # test freudenthal_simplex
     n = rand(5:20)

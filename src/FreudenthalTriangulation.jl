@@ -56,7 +56,7 @@ end
 Given a point `x` and its simplex `V` in the Freudenthal grid, returns the barycentric coordinates
 of `x` in the grid. `V` must be in the same order as provided by the output of `freudenthal_simplex`
 """
-function barycentric_coordinates(x, V)
+function barycentric_coordinates(x::Vector{Int64}, V::Vector{Vector{Int64}})
     d = x - V[1]
     p = sortperm(d, rev=true)
     n = length(x)
@@ -70,7 +70,7 @@ function barycentric_coordinates(x, V)
 end
 
 """
-    freudenthal_coords(x::AbstractArray{Float64})
+    freudenthal_coords(x::Vector{Float64})
 Given a point `x`, returns the simplex of the point `x` and the barycentric coordinates of `x` in the grid.
 """
 function freudenthal_simplex_and_coords(x::Vector{Float64})
@@ -79,10 +79,10 @@ function freudenthal_simplex_and_coords(x::Vector{Float64})
 end
 
 """
-    freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
+    freudenthal_simplex_and_coords!(x::Vector{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
 Fills `V` and `λ` with the simplex points in the Freudenthal space and associated coordinates respectively.
 """
-function freudenthal_simplex_and_coords!(x::AbstractArray{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
+function freudenthal_simplex_and_coords!(x::Vector{Float64}, V::Vector{Vector{Int64}}, λ::Vector{Float64})
     n = length(x)
     V[1] = floor.(Int, x)
     d = x - V[1]

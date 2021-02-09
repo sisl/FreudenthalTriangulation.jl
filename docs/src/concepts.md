@@ -6,7 +6,7 @@ Freudenthal triangulation of a continuous space produces a set of vertices with 
 
 One example of a Freudenthal triangulation with `n = 3` and `m = 3` is shown below. Note that ``v_1`` is always `3` so the diagram only shows ``v_2`` and ``v_3.``
 
-![triangulation](figures/triangulation.png)
+![triangulation](figures/triangulation.svg)
 
 Thus the vertices of the Freudenthal discretization of a 3-dimensional space with ``m=3`` has 10 vertices:
 ```math
@@ -67,5 +67,5 @@ Then we see that ``[1.2, -3.4, 2] = 0.4 \cdot [1, -4, 2] + 0.4 \cdot [1, -3, 2] 
 Now using these barycentric coordinates and the vertices of the Freudenthal simplex, we will be able to perform function approximation in Freudenthal space.
 
 
-\[1\] *Algorithms for Decision Making* by
-Mykel J. Kochenderfer, Tim A. Wheeler, Kyle H. Wray, MIT Press, 2021
+\[1\] [*Algorithms for Decision Making*](https://algorithmsbook.com/) by
+Mykel J. Kochenderfer, Tim A. Wheeler, Kyle H. Wray, MIT Press, 2022

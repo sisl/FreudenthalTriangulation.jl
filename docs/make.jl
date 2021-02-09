@@ -20,5 +20,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/SidhartK/TestRepo2.jl.git",
+    repo = "github.com/sisl/FreudenthalTriangulation.jl.git",
 )

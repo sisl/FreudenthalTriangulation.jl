@@ -29,7 +29,7 @@ using Test
     @test size(λ, 1) == n + 1
     @test abs(sum(λ) - 1.0) < 1e-8
 
-    # test freudenthal_simplex_and_coords!
+    # test freudenthal_simplex_and_coords
     n = rand(5:20)
     x = rand(Float64, n)
     V = freudenthal_simplex(x)

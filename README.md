@@ -1,8 +1,8 @@
 # FreudenthalTriangulation
 
-[![Build Status](https://travis-ci.org/sisl/FreudenthalTriangulation.jl.svg?branch=master)](https://travis-ci.org/sisl/FreudenthalTriangulation.jl)
-[![Coverage](https://codecov.io/gh/sisl/FreudenthalTriangulation.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/sisl/FreudenthalTriangulation.jl)
-[![Coverage](https://coveralls.io/repos/github/sisl/FreudenthalTriangulation.jl/badge.svg?branch=master)](https://coveralls.io/github/sisl/FreudenthalTriangulation.jl?branch=master)
+[![Build Status](https://travis-ci.org/sisl/FreudenthalTriangulation.jl.svg?branch=main)](https://travis-ci.org/sisl/FreudenthalTriangulation.jl)
+[![Coverage](https://codecov.io/gh/sisl/FreudenthalTriangulation.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/sisl/FreudenthalTriangulation.jl)
+[![Coverage](https://coveralls.io/repos/github/sisl/FreudenthalTriangulation.jl/badge.svg?branch=main)](https://coveralls.io/github/sisl/FreudenthalTriangulation.jl?branch=main)
 [![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://sisl.github.io/FreudenthalTraingulation.jl/)
 
 This package allows users to use Freudenthal triangulation for functional value approximation.

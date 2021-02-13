@@ -22,7 +22,7 @@ f(x) = \sum_{i = 1}^{n+1} \lambda_i f(v^{(i)})
 ```
 where the vertices of the simplex containing ``x`` are ``v^{(1)}, \dots, v^{(n+1)}``. The scalars ``\lambda_i`` are barycentric coordinates of ``x`` with respect to the simplex vertices. Recall that barycentric coordinates are non-negative weights that sum to ``1`` such that ``x = \sum_{i = 1}^{n+1}\lambda_i v^{(i)}``.
 
-To first find the coordinates of the simplex containing ``x``, we set the first vertex ``v^{(1)} = [\floor{x_1}, \floor{x_2}, \dots, \floor{x_n}]`` where ``\floor{a}`` is the greatest integer less than or equal to ``a``.
+To first find the coordinates of the simplex containing ``x``, we set the first vertex ``v^{(1)} = [\lfloor x_1 \rfloor, \lfloor x_2 \rfloor, \dots, \lfloor x_n \rfloor]`` where ``\lfloor a \rfloor`` is the greatest integer less than or equal to ``a``.
 
 Then we compute ``d = x - v^{(1)}`` and sort the components of ``d`` in descending order ``d_{p_1} \ge d_{p_2} \ge \dots \ge d_{p_n}`` where ``p`` is a permutation of `1:n`. From here the remaining simplex vertices can be constructed as ``v^{(k+1)} = v^{(k)} + e_{p_k}`` where ``e_i`` is the ``i``th standard basis vector.
 

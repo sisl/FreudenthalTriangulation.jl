@@ -1,7 +1,6 @@
-# FreudenthalTriangulation
+# Freudenthal Triangulation
 
 [![Build Status](https://travis-ci.org/sisl/FreudenthalTriangulation.jl.svg?branch=main)](https://travis-ci.org/sisl/FreudenthalTriangulation.jl)
-[![Coverage](https://codecov.io/gh/sisl/FreudenthalTriangulation.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/sisl/FreudenthalTriangulation.jl)
 [![Coverage](https://coveralls.io/repos/github/sisl/FreudenthalTriangulation.jl/badge.svg?branch=main)](https://coveralls.io/github/sisl/FreudenthalTriangulation.jl?branch=main)
 [![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://sisl.github.io/FreudenthalTriangulation.jl/)
 

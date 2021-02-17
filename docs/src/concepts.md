@@ -64,7 +64,33 @@ We see that in the Freudenthal simplex that we calculated above, the barycentric
 ```
 Then we see that ``[1.2, -3.4, 2] = 0.4 \cdot [1, -4, 2] + 0.4 \cdot [1, -3, 2] + 0.2 \cdot [2, -3, 2] + 0.0 \cdot [2,-3,3]`` so we can confirm that the barycentric coordinates are correct.
 
-Now using these barycentric coordinates and the vertices of the Freudenthal simplex, we will be able to perform function approximation in Freudenthal space.
+Now using these barycentric coordinates and the vertices of the Freudenthal simplex, we will be able to perform function approximation in Freudenthal space. Specifically, we will approximate ``f(x)`` as
+```math
+\begin{aligned}
+f(x) \approx \sum_{i = 1}^{n+1} f(v^{(i)}) \lambda_i.
+\end{aligned}
+```
+
+## Example
+
+Consider the example of ``f(x,y) = \sqrt{(x-1)^2 + (y-1)^2}`` defined on the region ``R = (0, 4) \times (0,4)``. Then for each point ``(x,y) \in R``, we can the Freudenthal simplex which contains ``(x,y)``. We see that these simplices are triangles which are either defined by ``v^{(1)} = (p, q), v^{(2)} = (p + 1, q), v^{(3)} = (p+1, q+1)`` or ``v^{(1)} = (p, q), v^{(2)} = (p, q + 1), v^{(3)} = (p+1, q+1)`` where ``p, q \in \{0, 1, 2, 3\}``. Then we can also find the barycentric coordinates of ``(x,y)`` in its simplex. Finally, we can use the barycentric coordinates ``\lambda_1, \lambda_2, \lambda_3`` to approximate the function ``f`` by
+```math
+\begin{aligned}
+f(x) \approx f(v^{(1)}) \lambda_1 + f(v^{(2)}) \lambda_2 + f(v^{(3)}) \lambda_3.
+\end{aligned}
+```
+For example, we can approximate ``f(1, 1.5)`` by seeing that it is contained in the simplex with vertices ``v^{(1)} = (1, 1), v^{(2)} = (1, 2), v^{(3)} = (2, 2).`` Then we also get that the barycentric coordiantes are ``\lambda_1 = 0.5, \lambda_2 = 0.5, \lambda_3 = 0.`` Therefore, we can approximate ``f`` at ``(1, 1.5)`` by
+```math
+\begin{aligned}
+f(x) \approx 0.5 \cdot 0 + 0.5 \cdot 1^2 = 0.5
+\end{aligned}
+```
+ which is fairly close to the true value of ``0.25``.
+
+The maps of ``f`` and its approximation using Freudenthal triangulation are shown below:
+
+![True Function Values](figures/function_true.svg)
+![Approximate Function Values](figures/function_approx.svg)
 
 
 \[1\] [*Algorithms for Decision Making*](https://algorithmsbook.com/) by

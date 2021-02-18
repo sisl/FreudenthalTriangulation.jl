@@ -49,4 +49,4 @@ For these functions the requirements are
 
 ## Credits
 
-Contributors to this package include Mykel Kochenderfer and Sidhart Krishnan
+Contributors to this package include Sidhart Krishnan, Tim Wheeler, and Mykel Kochenderfer.

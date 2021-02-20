@@ -4,7 +4,7 @@
 [![Coverage](https://coveralls.io/repos/github/sisl/FreudenthalTriangulation.jl/badge.svg?branch=main)](https://coveralls.io/github/sisl/FreudenthalTriangulation.jl?branch=main)
 [![Docs](https://img.shields.io/badge/docs-stable-blue.svg)](https://sisl.github.io/FreudenthalTriangulation.jl/)
 
-This package allows users to use Freudenthal triangulation for functional value approximation.
+This package allows users to use Freudenthal triangulation for [functional value approximation](https://sisl.github.io/FreudenthalTriangulation.jl/concepts/#Concepts).
 
 Specifically it allows the user to find the simplex of a point `x` in Freudenthal space and the barycentric coordinates of that point with respect to the its simplex.
 
@@ -38,7 +38,13 @@ Note that these vertices must be in the same order as provided by `freudenthal_s
 
 To calculate the simplex and the barycentric coordinates with one function, run
 ```julia
-V, coords = freudenthal_simplex(x, V, coords)
+V, coords = freudenthal_simplex_and_coords(x)
+```
+where `V` is the simplex vertices in the Freudenthal space and `coords` will be the barycentric coordinates with respect to the simplex.
+
+To calculate the simplex and barycentric coordinates without allocating more memory, run
+```julia
+V, coords = freudenthal_simplex_and_coords!(x, V, coords)
 ```
 so that `V` will be filled with the simplex vertices in the Freudenthal space and `coords` will be filled with the associated coordinates.
 

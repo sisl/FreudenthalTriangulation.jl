@@ -87,7 +87,7 @@ f(x) \approx 0.5 \cdot 0 + 0.5 \cdot 1^2 = 0.5
 ```
  which is fairly close to the true value of ``0.25``.
 
-The maps of ``f`` and its approximation using Freudenthal triangulation are shown below:
+The heatmaps of ``f`` and its approximation using Freudenthal triangulation are shown below:
 
 ![True Function Values](figures/function_true.svg)
 ![Approximate Function Values](figures/function_approx.svg)

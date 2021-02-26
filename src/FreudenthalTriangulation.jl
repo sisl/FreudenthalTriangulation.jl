@@ -4,7 +4,7 @@ using LinearAlgebra
 using SparseArrays
 
 export freudenthal_vertices, freudenthal_simplex, barycentric_coordinates, freudenthal_simplex_and_coords,
-        freudenthal_simplex_and_coords!
+        freudenthal_simplex_and_coords!, to_belief, to_freudenthal, to_belief_batch, to_freudenthal_batch
 
 
 # Construct the Freudenthal triangulation of the belief simplex
@@ -97,6 +97,68 @@ function freudenthal_simplex_and_coords!(x::Vector{Float64}, V::Vector{Vector{In
     end
     λ[1] = 1.0 - sum(λ[2:end])
     return V, λ
+end
+
+"""
+    to_belief(x, m)
+Transform a point `x` in the Freudenthal space to a point in the belief space.
+`m` is the resolution of the Freudenthal grid.
+"""
+to_belief(x, m::Int64) = (push!(x[1:end-1] - x[2:end], x[end]))./x[1]
+
+"""
+    to_freudenthal(b, m::Int64)
+Transform a point `b` in the belief space to a point in the Freudenthal space.
+`m` is the resolution of the Freudenthal grid.
+"""
+to_freudenthal(b, m::Int64) = [sum(b[k] for k in i : length(b))*m for i in 1 : length(b)]
+
+"""
+    freudenthal_matrix_inv(n::Int64, m::Int64)
+returns the inverse of the matrix used to switch from Freudenthal space to belief space.
+Let `IFM = freudenthal_matrix_inv(n, m)`, then `x = IFM * b`
+"""
+function freudenthal_matrix_inv(n::Int64, m::Int64)
+    return m .* sparse(UnitUpperTriangular(ones(n,n)))
+end
+
+"""
+    freudenthal_matrix(n::Int64, m::Int64)
+returns the inverse of the matrix used to switch from Freudenthal space to belief space.
+Let `FM = freudenthal_matrix(n, m)`, then `b = FM * x`
+"""
+function freudenthal_matrix(n::Int64, m::Int64)
+    return sparse(inv(Matrix(freudenthal_matrix_inv(n, m))))
+end
+
+"""
+    to_freudenthal_batch(B::AbstractArray, m::Int64)
+Given a batch of belief points `B`, returns the corresponding points in the Freudenthal space.
+"""
+function to_freudenthal_batch(B::AbstractArray, m::Int64)
+    ns = size(B, 1)
+    IFM = freudenthal_matrix_inv(ns, m)
+    BB = reshape(B, (ns, :))
+    X = similar(BB)
+    for i=1:size(BB, 2)
+        X[:, i] = IFM * view(BB, :, i)
+    end
+    return reshape(X, size(B))
+end
+
+"""
+    to_belief_batch(X::AbstractArray, m::Int64)
+Given a batch of points in Freudenthal space `X`, returns the corresponding points in belief space.
+"""
+function to_belief_batch(X::AbstractArray, m::Int64)
+    ns = size(X, 1)
+    FM = freudenthal_matrix(ns, m)
+    XX = reshape(X, (ns, :))
+    B = similar(XX)
+    for i=1:size(XX, 2)
+        B[:, i] = FM * view(XX, :, i)
+    end
+    return reshape(B, size(X))
 end
 
 end # module

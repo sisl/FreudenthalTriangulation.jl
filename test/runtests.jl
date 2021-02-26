@@ -54,4 +54,28 @@ using Test
     v2 = V2[i]
     @test abs(sum(v - v2)) < 1e-8
     @test abs(sum(λ - λ2)) < 1e-8
+
+    # test to_belief and to_freudenthal
+    n, m = rand(1:10, 2)
+    d = sort(cat(0, rand(0:m, n-1), dims=1))
+    x = [m - d[i] for i=1:n]
+    b = to_belief(x, m)
+    @test abs(sum(b) - 1.0) < 1e-8 && size(b, 1) == n
+    @test abs(sum(to_freudenthal(b, m) - x)) < 1e-8
+
+    # test to_freudenthal_batch and to_belief_batch
+    k, m, n= rand(1:10, 3)
+    B = rand(Float64, (n, k))
+    B = broadcast(abs, B)
+    for i = 1:k
+        B[:, i] = B[:, i] ./ sum(B[:, i])
+    end
+    X = to_freudenthal_batch(B, m)
+    for i = 1:k
+        X[:, i] = to_belief(X[:, i], m)
+    end
+    @test abs(sum(X - B)) < 1e-8
+
+    BB = to_belief_batch(X, m)
+    @test abs(sum(BB - B) < 1e-8)
 end

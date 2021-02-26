@@ -89,21 +89,21 @@ Thus `f_interp` allows us to approximate `f` at real coordinates based on the `f
 
 Consider a value function over a belief space `U(b)`. We want to interpolate this function over a Freudenthal space of dimension `n = 3` and granularity `m = 3`. We can find the belief space vertices that we need to complete the interpolation.
 ```julia
-belief_space_vert = to_belief.(freudenthal_simplex(n, m), m)
+belief_space_V = to_belief.(freudenthal_simplex(n, m), m)
 ```
-Then assume that for each vertex in `belief_space_vert`, we know the value function at that point in belief space. Assume that we have a function `U_vertices` which takes in a vertex in a vector of size `n`, `bv`, and returns `None` if the vector is not in `belief_space_vert` and `U(bv)` if `v` is in `belief_space_vert`. Thus we only need access to the `U_vertices` function instead of needing the value function over the entire belief space.
+Then assume that for each vertex in `belief_space_V`, we know the value function at that point in belief space. Assume that we have a function `U_vertices` which takes in a vertex in a vector of size `n`, `bv`, and returns `U(bv)` if `bv` is in `belief_space_V` and `None` otherwise. Thus we only need access to the `U_vertices` function instead of needing the value function over the entire belief space.
 
 Now we want to interpolate the value function to any point `b`.
 ```julia
 function U_interp(b)
- x = to_freudenthal(b, m)
- V, coords = freudenthal_simplex_and_coords(x)
+	x = to_freudenthal(b, m)
+	V, coords = freudenthal_simplex_and_coords(x)
 
- interp_val = 0
- for (v, coord) in zip(V, coords):
+	interp_val = 0
+	for (v, coord) in zip(V, coords):
 	 interp_val += U_vertices(to_belief(v, m)) * coord
- end
- return interp_val
+	end
+	return interp_val
 end		
 ```
-Thus `U_interp` allows us to approximate the value function over the entire belief space. 
+Thus `U_interp` allows us to approximate the value function over the entire belief space.

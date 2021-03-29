@@ -58,7 +58,7 @@ function _freudenthal_simplex(x::Vector{Float64})
 end
 
 """
-    barycentric_coordinates(x::Vector{Float64}, V::Vector{Vector{Int64}})
+    _barycentric_coordinates(x::Vector{Float64}, V::Vector{Vector{Int64}})
 Given a point `x` and its simplex `V` in the Freudenthal grid, returns the barycentric coordinates
 of `x` in the grid. `V` must be in the same order as provided by the output of `freudenthal_simplex`
 """
@@ -116,6 +116,8 @@ function belief_simplex(T::FreudenthalTriangulation, b)
     valid =  λ .> sqrt(eps())
     return B[valid], λ[valid]
 end
+
+# Old Code
 
 """
     freudenthal_vertices(n::Int64, m::Int64)

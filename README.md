@@ -1,4 +1,4 @@
-# Freudenthal Triangulation
+# FreudenthalTriangulations.jl
 
 [![Build Status](https://travis-ci.org/sisl/FreudenthalTriangulation.jl.svg?branch=main)](https://travis-ci.org/sisl/FreudenthalTriangulation.jl)
 [![Coverage](https://coveralls.io/repos/github/sisl/FreudenthalTriangulation.jl/badge.svg?branch=main)](https://coveralls.io/github/sisl/FreudenthalTriangulation.jl?branch=main)
@@ -13,7 +13,7 @@ Specifically it allows the user to find the simplex of a point `x` in Freudentha
 Start Julia and run the following command:
 
 ```julia
-Pkg.add("FreudenthalTriangulation")
+Pkg.add("FreudenthalTriangulations")
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ Pkg.add("FreudenthalTriangulation")
 To use the FreudenthalTriangulation module, begin your code with
 
 ```julia
-using FreudenthalTriangulation
+using FreudenthalTriangulations
 ```
 
 ## Finding Simplex and Barycentric Coordinates

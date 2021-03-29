@@ -16,7 +16,7 @@ In general, we can see that there are ``\frac{(m+n-1)!}{m!(n-1)!}`` vertices. Th
 
 ## Freudenthal Simplex and Barycentric Coordinates
 
-If we know, the values of a function ``f`` at the integer Freudenthal vertices, we can use triangulation to estimate the value at an arbitrary point ``x`` from the ``n+1`` vertices of the simplex enclosing ``x``:
+If we know the values of a function ``f`` at the integer Freudenthal vertices, we can use triangulation to estimate the value at an arbitrary point ``x`` from the ``n+1`` vertices of the simplex enclosing ``x``:
 ```math
 f(x) = \sum_{i = 1}^{n+1} \lambda_i f(v^{(i)})
 ```
@@ -24,7 +24,7 @@ where the vertices of the simplex containing ``x`` are ``v^{(1)}, \dots, v^{(n+1
 
 To first find the coordinates of the simplex containing ``x``, we set the first vertex ``v^{(1)} = [\lfloor x_1 \rfloor, \lfloor x_2 \rfloor, \dots, \lfloor x_n \rfloor]`` where ``\lfloor a \rfloor`` is the greatest integer less than or equal to ``a``.
 
-Then we compute ``d = x - v^{(1)}`` and sort the components of ``d`` in descending order ``d_{p_1} \ge d_{p_2} \ge \dots \ge d_{p_n}`` where ``p`` is a permutation of `1:n`. From here the remaining simplex vertices can be constructed as ``v^{(k+1)} = v^{(k)} + e_{p_k}`` where ``e_i`` is the ``i``th standard basis vector.
+We then compute ``d = x - v^{(1)}`` and sort the components of ``d`` in descending order ``d_{p_1} \ge d_{p_2} \ge \dots \ge d_{p_n}`` where ``p`` is a permutation of `1:n`. From here the remaining simplex vertices can be constructed as ``v^{(k+1)} = v^{(k)} + e_{p_k}`` where ``e_i`` is the ``i``th standard basis vector.
 
 As an example suppose we wanted to find the simplex vertices for the Freudenthal triangulation of ``x = [1.2, -3.4, 2]``. The first vertex is ``v^{(1)} = [1, -4, 2]`` which means that ``d = [0.2, 0.6, 0.0]``. We then arrange the components in descending order, ``0.6 \ge 0.2 \ge 0.0`` so ``p = [2, 1, 3]``. Thus the remaining simplex vertices are:
 ```math
@@ -34,7 +34,7 @@ v^{(3)} = [1,-3,2] + [1, 0, 0] = [2, -3, 2] \\
 v^{(4)} = [2, -3, 2] + [0,0,1] = [2,-3,3].
 \end{aligned}
 ```
-Now to compute the barycentric coordinates ``\lambda``, we can set
+To compute the barycentric coordinates ``\lambda``, we set
 ```math
 \begin{aligned}
 \lambda_{n+1} &= d_{p_n} \\
@@ -51,7 +51,7 @@ We know that since ``d_{p_1} \ge d_{p_2} \ge \dots \ge d_{p_n}`` is a decreasing
 \sum_{i=0}^{n+1}\lambda_i v^{(i)}_j = v^{(1)}_j \left(\sum_{i=0}^{n+1} \lambda_i\right) + \sum_{i=j+1}^{n+1}\lambda_i = v^{(1)}_j + d_{p_j} = x_j
 \end{aligned}
 ```
-Thus we have the barycentric coordinates of ``x`` with respect to the Freudenthal simplex enclosing ``x``.
+Thus, we have the barycentric coordinates of ``x`` with respect to the Freudenthal simplex enclosing ``x``.
 
 We see that in the Freudenthal simplex that we calculated above, the barycentric coordinates are
 ```math
@@ -62,7 +62,7 @@ We see that in the Freudenthal simplex that we calculated above, the barycentric
 \lambda_1 &= 1 - \lambda_2 - \lambda_3 - \lambda_4 = 0.4.
 \end{aligned}
 ```
-Then we see that ``[1.2, -3.4, 2] = 0.4 \cdot [1, -4, 2] + 0.4 \cdot [1, -3, 2] + 0.2 \cdot [2, -3, 2] + 0.0 \cdot [2,-3,3]`` so we can confirm that the barycentric coordinates are correct.
+We see that ``[1.2, -3.4, 2] = 0.4 \cdot [1, -4, 2] + 0.4 \cdot [1, -3, 2] + 0.2 \cdot [2, -3, 2] + 0.0 \cdot [2,-3,3]``, confirming that the barycentric coordinates are correct.
 
 Now using these barycentric coordinates and the vertices of the Freudenthal simplex, we will be able to perform function approximation in Freudenthal space. Specifically, we will approximate ``f(x)`` as
 ```math

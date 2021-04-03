@@ -1,9 +1,10 @@
-name = "FreudenthalTriangulation"
-uuid = "9b64c142-f029-458f-81dd-46a209467a7b"
+name = "FreudenthalTriangulations"
+uuid = "ea2b2c30-cea2-479b-adc8-fbe18a3c201b"
 authors = ["Sidhart Krishnan <sidhartkrishnan@gmail.com> and contributors"]
 version = "0.1.0"
 
 [deps]
+FreudenthalTriangulation = "9b64c142-f029-458f-81dd-46a209467a7b"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 

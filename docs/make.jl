@@ -1,11 +1,11 @@
 push!(LOAD_PATH, "../src/")
 
-using Documenter, FreudenthalTriangulation
+using Documenter, FreudenthalTriangulations
 
 makedocs(
-    modules = [FreudenthalTriangulation],
+    modules = [FreudenthalTriangulations],
     format = Documenter.HTML(),
-    sitename = "FreudenthalTriangulation.jl",
+    sitename = "FreudenthalTriangulations.jl",
     pages = [
         ##############################################
         ## MAKE SURE TO SYNC WITH docs/src/index.md ##
@@ -20,5 +20,5 @@ makedocs(
 )
 
 deploydocs(
-    repo = "github.com/sisl/FreudenthalTriangulation.jl.git",
+    repo = "github.com/sisl/FreudenthalTriangulations.jl.git",
 )

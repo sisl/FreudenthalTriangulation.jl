@@ -22,7 +22,7 @@ f(x) = \sum_{i = 1}^{n+1} \lambda_i f(v^{(i)})
 ```
 where the vertices of the simplex containing ``x`` are ``v^{(1)}, \dots, v^{(n+1)}``. The scalars ``\lambda_i`` are barycentric coordinates of ``x`` with respect to the simplex vertices. Recall that barycentric coordinates are non-negative weights that sum to ``1`` such that ``x = \sum_{i = 1}^{n+1}\lambda_i v^{(i)}``.
 
-To first find the coordinates of the simplex containing ``x``, we set the first vertex ``v^{(1)} = [\lfloor x_1 \rfloor, \lfloor x_2 \rfloor, \dots, \lfloor x_n \rfloor]`` where ``\lfloor a \rfloor`` is the greatest integer less than or equal to ``a``.
+To find the coordinates of the simplex containing ``x``, we set the first vertex ``v^{(1)} = [\lfloor x_1 \rfloor, \lfloor x_2 \rfloor, \dots, \lfloor x_n \rfloor]`` where ``\lfloor a \rfloor`` is the greatest integer less than or equal to ``a``.
 
 We then compute ``d = x - v^{(1)}`` and sort the components of ``d`` in descending order ``d_{p_1} \ge d_{p_2} \ge \dots \ge d_{p_n}`` where ``p`` is a permutation of `1:n`. From here the remaining simplex vertices can be constructed as ``v^{(k+1)} = v^{(k)} + e_{p_k}`` where ``e_i`` is the ``i``th standard basis vector.
 
@@ -91,6 +91,24 @@ The heatmaps of ``f`` and its approximation using Freudenthal triangulation are 
 
 ![True Function Values](figures/function_true.svg)
 ![Approximate Function Values](figures/function_approx.svg)
+
+## Belief Space Interpolation
+Now if we want to use freudenthal triangulation in belief-state planning, then we need to be able to convert integer vertices in Freudenthal space to form a triangulation of the belief over ``n`` discrete states. This transformation changes the vertex ``v`` into
+```math
+v' = \frac{1}{m} [v_1 - v_2, v_2 - v_3, \dots, v_{n-1} - v_n, v_n]
+```
+where ``v'`` represents a valid probability distribution that sums to ``1`` as ``v_1 = m``. The probability assigned to the ``i``th state is given by ``v'_{i}``.
+
+The transformation is equivalent to the matrix multiplication ``v' = Bv`` with
+```math
+B = \frac{1}{m}\begin{bmatrix} 1 & -1 & 0 & 0 & \cdots & 0 \\ 0 & 1 & -1 & 0 & \cdots & 0 \\ \vdots & & & & & \vdots \\ 0 & 0 & \cdots & & 1 & -1 \\ 0 & 0 & \cdots & & 0 & 1 \end{bmatrix}.
+```
+This matrix ``B`` is invertible so the opposite transformation can be done. Hence any belief ``b`` can thus be mapped into Freudenthal space to obtain its counterpart ``x = B^{-1}b``. It turns out that the ``i``th component of ``B^{-1}b`` is simply ``m \sum_{k = i}^n b_k.``
+Now that we have the ability to convert between belief space and Freudenthal space. We showed above how to interpolate in Freudenthal space with integer simplex vertices. To interpolate in belief spac,e we simply use the transformation to the belief space. Suppose we know the values ``\mathcal{U}(b)`` at all of the vertices ``v'`` in the belief triangulation. Given any new belief ``b`` we can compute ``x = B^{-1}b``, find the vertices ``v^{(1)}, v^{(2)}, \dots, v^{(n+1)}`` of the corresponding simplex in the original Freudenthal triangulation and then compute the barycentric coordinates ``\lambda = (\lambda_1, \lambda_2, \dots, \lambda_{n+1})`` for ``x.``
+The interpolate value is then:
+```math
+\mathcal{U}(b) = \sum_{i=1}^{n+1} \lambda_i \mathcal{U}(v'^{(i)}) = \sum_{i = 1}^{n+1} \lambda_i \mathcal{U}(Bv^{(i)}).
+```
 
 
 \[1\] [*Algorithms for Decision Making*](https://algorithmsbook.com/) by

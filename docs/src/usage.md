@@ -2,108 +2,72 @@
 
 ## Getting Started
 
-To use the FreudenthalTriangulation module, begin your code with
+To use the FreudenthalTriangulations module, begin your code with
 
 ```julia
-using FreudenthalTriangulation
+using FreudenthalTriangulations
 ```
+
+## FreudenthalTriangulation
+The `FreudenthalTriangulation` struct can be used to specify the dimension of the space which is represented by `n` and the `m` represents the granularity of the triangulation.
+
+## Finding Freudenthal Vertices
+To find a Freudenthal triangulation of a space of dimension `n` with granularity `m` use the `vertices` function which takes in a `FreudenthalTriangulation` struct and returns a list of vertices. Each of these vertices are represented by `n` dimensional vectors. Thus if we set ``T = FreudenthalTriangulation(n, m)`` and
+```julia
+V = vertices(T)
+```
+then `V` is a list of vertices comprising a freudenthal triangulation of an `n` dimensional space.
 
 ## Finding Simplex and Barycentric Coordinates
 
-To find the vertices of the simplex around a point `x` in Freudenthal space, run
+To find the vertices of the simplex around a point `x` in Freudenthal space and the barycentric coordinates, run
 ```julia
-V = freudenthal_simplex(x)
+V, coords = simplex(x)
 ```
-Then to find barycentric coordinates of `x` with respect to the simplex, run
-```julia
-coords = barycentric_coordinates(x, V)
-```
-Note that these vertices must be in the same order as provided by `freudenthal_simplex`.
+Then we have that `V` is the simplex vertices in the Freudenthal space and `coords` will be the barycentric coordinates with respect to the simplex.
 
-To calculate the simplex and the barycentric coordinates with one function, run
-```julia
-V, coords = freudenthal_simplex_and_coords(x)
-```
-where `V` is the simplex vertices in the Freudenthal space and `coords` will be the barycentric coordinates with respect to the simplex.
-
-To calculate the simplex and barycentric coordinates without allocating more memory, run
-```julia
-V, coords = freudenthal_simplex_and_coords!(x, V, coords)
-```
-so that `V` will be filled with the simplex vertices in the Freudenthal space and `coords` will be filled with the associated coordinates.
-
-For these functions the requirements are
+For these functions, the requirements are
 - `x::Vector{Float64}` The point in Freudenthal space
 - `V::Vector{Vector{Float64}}` The vertices of the simplex around `x` in Freudenthal space
 - `coords::Vector{Float64}` The barycentric coordinates of `x` with respect to the simplex
 
-## Moving between Belief and Freudenthal Space
-
-To go from a point `x` in Freudenthal space to a point in belief space use the function
+## Operating in Belief Space
+This package provides two functions to operate in belief space. First to convert a freudenthal triangulation into belief space use the function
 ```julia
-b = to_belief(x, m)
+bv = belief_vertices(T)
 ```
-where `m` is the granularity of the triangulation.
+We see that `bv` is a set of vertices in belief space corresponding to a freudenthal triangulation in Freudenthal space. Given any point in belief space we can find a simplex of points in these belief vertices `bv` and from there approximate the value function at this belief.
 
-To go from a point in belief space `b` to a point in Freudenthal space use the function
+This leads us into the second function over the belief space, `belief_simplex`. This function allows us to calculate the belief simplex of a belief.
 ```julia
-x = to_freudenthal(b, m)
+B, coords = belief_simplex(T, b)
 ```
-where  `m` is again the granularity.
+where `T` is a FreudenthalTriangulation struct and `b` is a belief. Then we have that `B` is a vector containing a set of beliefs corresponding to the belief simplex and `coords` is the barycentric coordinates of the belief in the belief simplex.
 
-To convert a batch of belief points `B` in a Freudenthal space with granularity `m`, use
-```julia
-X = to_freudenthal_batch(B, m)
-```
+For these functions, the requirements are
+- `T::FreudenthalTriangulation` FreudenthalTriangulation struct
+- `b::Vector{Float64}` A belief in the belief space
+- `bv::Vector{Float64}` The belief vertices of a triangulation `T`
+- `B::Vector{Vector{Float64}}` The vector of vertices of the belief simplex of a belief `b`
+- `coords::Vector{Float64}` The barycentric coordinates of the belief in the belief simplex
 
-Finally, to convert a batch of points in freudenthal space `X` into belief space with granularity `m`, use
-```julia
-X = to_belief_batch(X, m)
-```
-For these functions the requirements are
-- `m::Int64` Granularity of the Freudenthal triangulation
-- `B::AbstractArray` The columns are the belief state points
-- `X::AbstractArray` The columns are the points in Freudenthal space
+## Example: Interpolating a Function in Belief Space
 
-## Example: Interpolating a Function in Freudenthal Space
+For an example of function approximation using this package, consider the function `U(x,y) = ((x-1)^2 + (y-1)^2)^0.5`.  However, assume that we do not have access to `U(x,y)` but instead, we only know `U` for values `[x,y]` in `belief_vertices(FreudenthalTriangulation(2, m))` for some granularity `m`. Assume for this example that the maximum granularity is `m = 3`. Thus we have access to a function `U_vertices(x, y)` which returns `U(x,y)` if `[x,y]` in `belief_vertices(FreudenthalTriangulation(2, 3))` and `None` otherwise.
 
-For an example of function approximation using this package, consider the function `f(x,y) = ((x-1)^2 + (y-1)^2)^0.5`.  However, assume that we do not have access to `f(x,y)` but instead, we only know `f` at integer values of `x` and `y` so we have access to a function `f_vertices(x, y)` which returns `f(x,y)` if `x` and `y` are integers and `None` otherwise.
-
-Using `f_vertices`, we can create a function `f_interp` which will approximate `f(x,y)` by interpolating on the Freudenthal space. To do this, we will use the `freudenthal_simplex_and_coords` function.
+Using `U_vertices`, we can create a function `U_interp` which will approximate `U(x,y)` by interpolating on the Freudenthal space. To do this, we will use the `freudenthal_simplex_and_coords` function.
 
 ```julia
-function f_interp(x, y)
+function U_interp(x, y)
 	X = [x, y]
-	V, coords = freudenthal_simplex_and_coords(X)
+	T = FreudenthalTriangulation(2, 3)
+	B, coords = belief_simplex(T, X)
 
 	interp_val = 0
-	for (v, coord) in zip(V, coords)
-		interp_val += f_vertices(v[1], v[2]) * coord
+	for (b, coord) in zip(B, coords)
+		interp_val += U_vertices(v[1], v[2]) * coord
 	end
 	return interp_val
 end		
 ```
-Thus `f_interp` allows us to approximate `f` at real coordinates based on the `f_vertices` function.
-
-## Example: Interpolating a Value Function over a Belief Space
-
-Consider a value function over a belief space `U(b)`. We want to interpolate this function over a Freudenthal space of dimension `n = 3` and granularity `m = 3`. We can find the belief space vertices that we need to complete the interpolation.
-```julia
-belief_space_V = to_belief.(freudenthal_simplex(n, m), m)
-```
-Then assume that for each vertex in `belief_space_V`, we know the value function at that point in belief space. Assume that we have a function `U_vertices` which takes in a vertex in a vector of size `n`, `bv`, and returns `U(bv)` if `bv` is in `belief_space_V` and `None` otherwise. Thus we only need access to the `U_vertices` function instead of needing the value function over the entire belief space.
-
-Now we want to interpolate the value function to any point `b`.
-```julia
-function U_interp(b)
-	x = to_freudenthal(b, m)
-	V, coords = freudenthal_simplex_and_coords(x)
-
-	interp_val = 0
-	for (v, coord) in zip(V, coords):
-	 interp_val += U_vertices(to_belief(v, m)) * coord
-	end
-	return interp_val
-end		
-```
-Thus `U_interp` allows us to approximate the value function over the entire belief space.
+Thus `U_interp` allows us to approximate `U` at real coordinates based on the `U_vertices` function.

@@ -1,4 +1,4 @@
-# [FreudenthalTriangulation.jl](https://github.com/JuliaPOMDP/POMDPs.jl)
+# [FreudenthalTriangulations.jl](https://github.com/sisl/FreudenthalTriangulations.jl)
 *A Julia package that allows users to use Freudenthal triangulation for functional value approximation.*
 
 

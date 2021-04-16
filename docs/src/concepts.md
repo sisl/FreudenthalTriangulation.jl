@@ -14,6 +14,10 @@ Thus the vertices of the Freudenthal discretization of a 3-dimensional space wit
 ```
 In general, we can see that there are ``\frac{(m+n-1)!}{m!(n-1)!}`` vertices. This is because we can consider the sequence ``u_2, u_3, \dots, u_n`` where ``u_i = v_i + (n - i)`` for all ``2 \le i \le n.`` Then we must have that since ``v_i \ge v_{i+1}`` for ``2 \le i \le n-1``, this means that ``u_i > u_{i+1}``. We also see that since ``v_2 \le m``, this means that ``u_2 \le m + n - 2`` and since ``v_n \ge 0``, this means that ``u_2 \ge 0``. Therefore, to count the number of vertices in a Freudenthal Triangulation, we must just select ``n-1`` distinct integers in the range ``[0, m+n-2]`` and this will correspond to a unique sequence ``u_2, u_3, \dots, u_n`` and thus it corresponds to a unique vertex ``[v_1, v_2, \dots, v_n]`` where ``m = v_1 \ge v_2 \ge \dots \ge v_n \ge 0.`` Thus there are ``\binom{m+n-1}{n-1} = \frac{(m+n-1)!}{m!}{(n-1)!}`` vertices in a Freudenthal triangulation of an ``n``-dimensional space with granularity ``m``.
 
+The number of beliefs in the Freudenthal triangulation for beliefs over ``n`` discrete states as a function of the granularity ``m`` is shown in the figure below
+
+![Number of triangulation](figures/num_triangulations.svg)
+
 ## Freudenthal Simplex and Barycentric Coordinates
 
 If we know the values of a function ``f`` at the integer Freudenthal vertices, we can use triangulation to estimate the value at an arbitrary point ``x`` from the ``n+1`` vertices of the simplex enclosing ``x``:
@@ -71,7 +75,7 @@ f(x) \approx \sum_{i = 1}^{n+1} f(v^{(i)}) \lambda_i.
 \end{aligned}
 ```
 
-## Example
+## Example of Freudenthal Interpolation
 
 Consider the example of ``f(x,y) = \sqrt{(x-1)^2 + (y-1)^2}`` defined on the region ``R = (0, 4) \times (0,4)``. Then for each point ``(x,y) \in R``, we can the Freudenthal simplex which contains ``(x,y)``. We see that these simplices are triangles which are either defined by ``v^{(1)} = (p, q), v^{(2)} = (p + 1, q), v^{(3)} = (p+1, q+1)`` or ``v^{(1)} = (p, q), v^{(2)} = (p, q + 1), v^{(3)} = (p+1, q+1)`` where ``p, q \in \{0, 1, 2, 3\}``. Then we can also find the barycentric coordinates of ``(x,y)`` in its simplex. Finally, we can use the barycentric coordinates ``\lambda_1, \lambda_2, \lambda_3`` to approximate the function ``f`` by
 ```math
@@ -109,6 +113,28 @@ The interpolate value is then:
 ```math
 \mathcal{U}(b) = \sum_{i=1}^{n+1} \lambda_i \mathcal{U}(v'^{(i)}) = \sum_{i = 1}^{n+1} \lambda_i \mathcal{U}(Bv^{(i)}).
 ```
+We can iteratively apply backups over our beliefs in ``B`` using one-step lookahead with our belief value function interpolation to get an upper bound on the value. If ``\mathcal{U}`` is initialized with an upper bound, value iteration will result in an upper bound even after a finite number of iterations.
+
+## Example of Freudenthal Discretization of a Belief Space
+We saw that the Freudenthal discretization of a belief space over ``3`` states with ``m=3`` has ``10`` vertices
+```math
+\begin{Bmatrix} [3,0,0] & [3,1,0] & [3,2,0] & [3,3,0] \\  & [3,1,1] & [3,2,1] & [3,3,1] \\ & & [3,2,2] & [3,3,2] \\ & & & [3,3,3] \end{Bmatrix}
+```
+
+We have the same triangulation mapped to the ``3``-state belief space. These vertices are:
+```math
+\begin{Bmatrix} [1,0,0] & [2/3, 1/3, 0] & [1/3, 2/3, 0] & [0, 1, 0] \\  & [2/3, 0, 1/3] & [1/3, 1/3, 1/3] & [0, 2/3, 1/3] \\ & & [1/3, 0, 2/3] & [0, 1/3, 2/3] \\ & & & [0, 0, 1] \end{Bmatrix}
+```
+
+Since the first component of every vertex is ``m.`` The other two dimensions, along with the projected triangulation, are shown in the image below.
+
+![Freudenthal Triangulation Belief Triangulation](figures/ft_belief_triangulations.svg)
+
+## Example of Policy and Value Function for Manufacture Problem
+The policy and value function for the maintenance problem with granularity ``m = 10`` after ``11`` iterations. The value function plot shows the discrete belief points as white dots. This policy approximates the exact policy given in appendix F of Algorithms for Decision Making.
+
+![Policy Triangulation](figures/policytriangulation.svg)
+![Value Triangulation](figures/valuetriangulation.svg)
 
 
 \[1\] [*Algorithms for Decision Making*](https://algorithmsbook.com/) by

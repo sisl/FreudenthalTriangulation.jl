@@ -12,7 +12,7 @@ using FreudenthalTriangulations
 The `FreudenthalTriangulation` struct can be used to specify the dimension of the space which is represented by `n` and the `m` represents the granularity of the triangulation.
 
 ## Finding Freudenthal Vertices
-To find a Freudenthal triangulation of a space of dimension `n` with granularity `m` use the `vertices` function which takes in a `FreudenthalTriangulation` struct and returns a list of vertices. Each of these vertices are represented by `n` dimensional vectors. Thus if we set ``T = FreudenthalTriangulation(n, m)`` and
+To find a Freudenthal triangulation of a space of dimension `n` with granularity `m` use the `vertices` function which takes in a `FreudenthalTriangulation` struct and returns a list of vertices. Each of these vertices are represented by `n` dimensional vectors. Thus if we set `T = FreudenthalTriangulation(n, m)` and
 ```julia
 V = vertices(T)
 ```

@@ -23,7 +23,7 @@ To use the FreudenthalTriangulation module, begin your code with
 ```julia
 using FreudenthalTriangulations
 ```
-
+<!--
 ## Finding Simplex and Barycentric Coordinates
 
 To find the vertices of the simplex around a point `x` in Freudenthal space, run
@@ -51,7 +51,7 @@ so that `V` will be filled with the simplex vertices in the Freudenthal space an
 For these functions the requirements are
 - `x::Vector{Float64}` The point in Freudenthal space
 - `V::Vector{Vector{Float64}}` The vertices of the simplex around `x` in Freudenthal space
-- `coords::Vector{Float64}` The barycentric coordinates of `x` with respect to the simplex
+- `coords::Vector{Float64}` The barycentric coordinates of `x` with respect to the simplex -->
 
 ## Credits
 

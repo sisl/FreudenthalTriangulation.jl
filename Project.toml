@@ -1,7 +1,7 @@
 name = "FreudenthalTriangulations"
 uuid = "ea2b2c30-cea2-479b-adc8-fbe18a3c201b"
 authors = ["Sidhart Krishnan, Tim Wheeler, and Mykel Kochenderfer"]
-version = "0.2.0"
+version = "2.1.0"
 
 [deps]
 FreudenthalTriangulation = "9b64c142-f029-458f-81dd-46a209467a7b"

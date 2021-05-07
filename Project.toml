@@ -1,6 +1,6 @@
 name = "FreudenthalTriangulations"
 uuid = "ea2b2c30-cea2-479b-adc8-fbe18a3c201b"
-authors = ["Sidhart Krishnan <sidhartkrishnan@gmail.com> and contributors"]
+authors = ["Sidhart Krishnan, Tim Wheeler, and Mykel Kochenderfer"]
 version = "0.1.0"
 
 [deps]
